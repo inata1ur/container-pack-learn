@@ -19,7 +19,8 @@ public:
 
   double volume() const { return length * width * height; }
 
-  auto operator<=>(const Box& box) { return this->volume() < box.volume(); }
+  // auto operator<=>(const Box& box) const { return this->volume() < box.volume(); }
+  bool operator<(const Box& box) { return this->volume() < box.volume(); }
 
   friend std::ostream& operator<<(std::ostream& os, const Box& box)
   {

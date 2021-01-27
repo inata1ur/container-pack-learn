@@ -45,7 +45,7 @@ public:
   public:
     friend class Truckload;
     using Pointer = Package*;
-    using Value   = SharedBox;
+    using Value   = Box;
 
   private:
     Pointer ptr;
@@ -57,32 +57,14 @@ public:
 
     bool   operator==(const Iterator& itr) const { return ptr == itr.ptr; }
     bool   operator!=(const Iterator& itr) const { return ptr != itr.ptr; }
-    Value& operator*() const { return ptr->pBox; }
+    Value& operator*() const { return *ptr->pBox.get(); }
 
-    Iterator& operator++()
-    {
-      ptr = ptr->pNext;
-      return *this;
-    }
+    Iterator& operator++();
 
-    Iterator operator++(int)
-    {
-      auto temp = *this;
-      ++(*this);
-      return temp;
-    }
+    Iterator operator++(int);
 
-    Iterator max_element(Iterator first, Iterator last)
-    {
-      if (first == last) return last;
-
-      auto largest = first;
-      for (auto itr = ++first; first != last; ++first)
-        if (largest.ptr->pBox < first.ptr->pBox) largest = first;
-
-
-      return largest;
-    }
+    Iterator max_element(Iterator first, Iterator last);
+    void fill(Iterator first, Iterator last, const Value& value);
   };
 
   Iterator begin() const { return Iterator {pHead}; }

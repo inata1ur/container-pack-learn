@@ -33,5 +33,10 @@ int main()
 
   auto max = std::max_element(copy.begin(), copy.end());
 
-  std::cout << *(*max).get() << std::endl;
+  std::cout << *max << std::endl;
+
+  Truckload f;
+
+  std::fill(copy.begin(), copy.end(), Box{3.0, 4.0, 5.0});
+  std::cout << copy << std::endl;
 }
